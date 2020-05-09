@@ -43,8 +43,8 @@ public class Tortuga extends Thread {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                //Ejecutre el código
             }
+            System.out.println("Tortuga ha finalizado!  \n");
         }
     }
     
@@ -59,7 +59,9 @@ public class Tortuga extends Thread {
                 sem.acquire();
                 System.out.println("Tortuga vuelta: " + i);
                 sem.release();
-                Thread.sleep(15);
+                // Noté que la tortuga debe tener un mayor sleep porque sino
+                // Va a solicitar el .aquire() antes que la liebre
+                Thread.sleep(15); 
             }
             System.out.println("Tortuga ha finalizado!  \n");
         } catch (InterruptedException ex) {

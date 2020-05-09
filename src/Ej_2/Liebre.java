@@ -51,8 +51,8 @@ public class Liebre extends Thread{
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                //Ejecutre el código
             }
+            System.out.println("Liebre ha finalizado!  \n");
         }
     }
     
