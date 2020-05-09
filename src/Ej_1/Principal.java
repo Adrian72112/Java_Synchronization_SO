@@ -13,6 +13,7 @@ package Ej_1;
 public class Principal {
     
     public static void main(String... args) throws InterruptedException{
+        System.out.println("--- Ejercicio 1 --- \n");
         int[] com = {0};
         HolaMundoHilo hilo1 = new HolaMundoHilo(com);
         HolaMundoHilo hilo2 = new HolaMundoHilo(com,hilo1.getId());
