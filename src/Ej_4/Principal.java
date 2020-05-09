@@ -8,30 +8,42 @@ import java.util.concurrent.Semaphore;
  */
 public class Principal {
     
-    static final int MAX_THREADS = 4;
+    static final int MAX_THREADS = 2;
     static final int CPU_CORES = 8;
-    static final int N = 100;
+    static final long N = 10000;
     
     public static void main(String... args) throws InterruptedException{
-        // Inicializo var global para la suma
-        int[] sumaTotal = {0};
+        // Inicializo variable timerInicio
+        long timerInicio = System.currentTimeMillis();
+        ThreadGroup group = new ThreadGroup("Hilos");
+        // Inicializo Objeto del tipo int global para la suma
+        long[] sumaTotal = {0};
         
         Semaphore semaforo = new Semaphore(CPU_CORES);
-        int subRangos[] = new int[MAX_THREADS]; // Sacar valor de intervalos
-        int variacion = N / MAX_THREADS;
+        long subRangos[] = new long[MAX_THREADS]; // Sacar valor de intervalos
+        long variacion = N / MAX_THREADS;
         
-        for (int i = 1; i <= MAX_THREADS;i++)
-            subRangos[i-1] = variacion * i;
-        
+        // Inicializo los hilos para sumar
         for (int i = 0; i < MAX_THREADS;i++){
-            int inicio = subRangos[i] - subRangos[0];
+            subRangos[i] = variacion * (i+1);
+            long inicio = subRangos[i] - subRangos[0];
             // Comienzo el hilo
-            SumaNatural sumita = new SumaNatural(semaforo,sumaTotal, inicio, subRangos[i]);
+            SumaNatural sumita = new SumaNatural(semaforo,sumaTotal, inicio, subRangos[i], group , "");
             sumita.start();
-            sumita.join();
+            /*
+            En las simulaciones noté que es más costoso el tema de crear un hilo, que la suma en sí.
+            Es mas eficiente crear un solo hilo y realizar la suma. En mi caso con procesador i7 = 8770U.
+            Simule en SumaNatural() que el realizar la suma costara 1 milisegundo y ahí si se vió diferencias 
+            en los tiempos cuanto más hilos creados, mejoraba mucho el tiempo.
+            */
         }
-        
-        System.out.println("La suma final es: " + sumaTotal[0]);
+        while (group.activeCount() > 0) {
+            // do nothing
+        }
+        long timerFin = System.currentTimeMillis();
+        double tiempo = (double) ((timerFin - timerInicio));
+        System.out.println("\n LA SUMA FINAL ES! : " + sumaTotal[0] + 
+                "\ny demoró: " + tiempo + " milisegundos en terminar");
     }
     
 }

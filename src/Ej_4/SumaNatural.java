@@ -16,15 +16,16 @@ import java.util.logging.Logger;
 public class SumaNatural extends Thread {
 
     Semaphore sem;
-    int[] sumaTotal;
-    int ini;
-    int fin;
+    long[] sumaTotal;
+    long ini;
+    long fin;
     
-    public SumaNatural(Semaphore sem, int[] _sumaTotal, int inicio, int _final) {
-        this.sumaTotal = _sumaTotal;
+    public SumaNatural(Semaphore sem, long[] sumaTotal, long ini, long fin, ThreadGroup group, String name) {
+        super(group, name);
         this.sem = sem;
-        this.ini = inicio;
-        this.fin = _final;
+        this.sumaTotal = sumaTotal;
+        this.ini = ini;
+        this.fin = fin;
     }
         
     @Override
@@ -34,6 +35,8 @@ public class SumaNatural extends Thread {
             while (ini < fin){
                 sumaTotal[0] = sumaTotal[0] + (ini + 1);
                 ini++;
+                // Voy a simular que esto tiene un costo en tiempo
+                sleep(1);
             }
             this.sem.release();
         } catch (InterruptedException ex) {
