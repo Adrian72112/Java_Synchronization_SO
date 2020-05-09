@@ -11,17 +11,22 @@ package Ej_1;
  */
 public class HolaMundoHilo extends Thread {
     
-    int hilo;
-    int[] ejecutar;
+    long hilo;
+    int[] responder;
     
-    public HolaMundoHilo(int[] _ejecutar, int _hilo){
-        ejecutar = _ejecutar;
+    public HolaMundoHilo(int[] _ejecutar, long _hilo){
+        responder = _ejecutar;
         hilo = _hilo;
+    }
+    
+    public HolaMundoHilo(int[] _ejecutar){
+        responder = _ejecutar;
     }
     
     @Override
     public void run(){
-        String response = (ejecutar[0] == 1) ? "Hola Hilo " + hilo + "!!!"  : "Hola Mundo!!!";
+        String response = (responder[0] == 1) ? "Hola Hilo " + hilo + "!!!"  : "Hola Mundo!!!";
+        responder[0]++;
         System.out.println(response);
     }
     
