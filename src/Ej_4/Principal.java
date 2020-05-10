@@ -8,7 +8,7 @@ import java.util.concurrent.*;
  */
 public class Principal {
     
-    static final int MAX_THREADS = 100; // Probar con 2, con 100 y con cpu cores
+    static final int MAX_THREADS = 8; // Probar con 2, con 100 y con cpu cores
     static final long N = 1000000;
     
     public static void main(String... args) throws InterruptedException{
