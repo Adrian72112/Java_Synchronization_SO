@@ -30,7 +30,7 @@ public class SumaNatural extends Thread {
                 Sumar.suma(sumaTotal,ini);
                 ini++;
                 // Voy a simular que esto tiene un costo en tiempo
-                sleep(1);
+               // sleep(100);
             }
         } catch (InterruptedException ex) {
             Logger.getLogger(SumaNatural.class.getName()).log(Level.SEVERE, null, ex);
