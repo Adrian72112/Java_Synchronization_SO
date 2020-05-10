@@ -20,8 +20,7 @@ public class SumaNatural extends Thread {
     long ini;
     long fin;
     
-    public SumaNatural(Semaphore sem, long[] sumaTotal, long ini, long fin, ThreadGroup group, String name) {
-        super(group, name);
+    public SumaNatural(Semaphore sem, long[] sumaTotal, long ini, long fin){
         this.sem = sem;
         this.sumaTotal = sumaTotal;
         this.ini = ini;
@@ -31,16 +30,17 @@ public class SumaNatural extends Thread {
     @Override
     public void run(){
         try {
-            this.sem.acquire();
+            this.sem.acquire(1);
             while (ini < fin){
-                sumaTotal[0] = sumaTotal[0] + (ini + 1);
+                Sumar.suma(sumaTotal,ini);
                 ini++;
                 // Voy a simular que esto tiene un costo en tiempo
                 sleep(1);
             }
-            this.sem.release();
         } catch (InterruptedException ex) {
             Logger.getLogger(SumaNatural.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        this.sem.release(1);
     }
 }
